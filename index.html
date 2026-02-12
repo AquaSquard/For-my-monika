@@ -10,7 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            /* Using your uploaded bg.jpg with a soft overlay */
+            /* Uses your uploaded bg.jpg with a soft overlay */
             background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('bg.jpg');
             background-size: cover;
             background-position: center;
@@ -50,14 +50,12 @@
         #yes-btn { background: linear-gradient(45deg, #f06292, #e91e63); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 1.2rem; cursor: pointer; transition: all 0.4s ease; box-shadow: 0 4px 15px rgba(233,30,99,0.3); }
         #no-btn { background: white; color: #888; border: 1px solid #ccc; padding: 10px 25px; border-radius: 50px; cursor: pointer; transition: all 0.2s ease; }
 
-        /* The Centered Polaroid Section */
         #final-section { 
             display: none; 
             opacity: 0; 
             transition: all 1.5s ease; 
-            margin-top: 30px; 
+            margin-top: 50px; 
             width: 100%;
-            display: flex;
             flex-direction: column;
             align-items: center;
         }
@@ -76,12 +74,11 @@
             width: 280px; 
             height: 360px; 
             background: white; 
-            padding: 12px 12px 45px 12px; /* Stylish frame padding */
+            padding: 12px 12px 50px 12px; /* Bottom padding for Polaroid look */
             box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
             transition: transform 0.5s ease;
         }
 
-        /* Tilted Polaroid Effect */
         .image-card:nth-child(odd) { transform: rotate(-3deg); }
         .image-card:nth-child(even) { transform: rotate(3deg); }
         .image-card:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
@@ -116,7 +113,7 @@
             <button id="yes-btn" onclick="handleYes()">YES 💖</button>
             <button id="no-btn" onmouseover="moveNo()">NO 🙈</button>
         </div>
-        <p id="yes-status" style="color: var(--rose); font-style: italic; min-height: 24px;"></p>
+        <p id="yes-status" style="color: var(--rose); font-style: italic; min-height: 24px; margin-top: 10px;"></p>
 
         <div id="final-section">
             <div class="image-grid">
@@ -128,6 +125,7 @@
                 </div>
             </div>
             <p class="intro-subtext" style="opacity: 1;">Love you for being my Valentine. Love you for being my girl.<br>Love you for being <span class="shimmer">My kitty for life.</span></p>
+            <p style="font-size: 0.8rem; color: #999; margin-top: 40px;">Made with love, just for My Kitty Cat.</p>
         </div>
     </div>
 
@@ -138,17 +136,19 @@
     </div>
 
     <script>
-        // Start flow
-        setTimeout(() => {
-            document.getElementById('intro-screen').style.opacity = '0';
+        // Transition and Timing
+        window.onload = () => {
             setTimeout(() => {
-                document.getElementById('intro-screen').style.display = 'none';
-                document.getElementById('main-proposal').style.display = 'block';
-                setTimeout(() => { document.getElementById('main-proposal').style.opacity = '1'; }, 50);
-            }, 1500);
-        }, 4000);
+                document.getElementById('intro-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('intro-screen').style.display = 'none';
+                    document.getElementById('main-proposal').style.display = 'block';
+                    setTimeout(() => { document.getElementById('main-proposal').style.opacity = '1'; }, 50);
+                }, 1500);
+            }, 4000);
+        };
 
-        // Heart Drawing
+        // Heart Drawing Canvas
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         let hearts = [];
@@ -178,23 +178,24 @@
         function animate() { ctx.clearRect(0,0, canvas.width, canvas.height); hearts.forEach(h => { h.update(); h.draw(); }); requestAnimationFrame(animate); }
         animate();
 
-        // Yes Logic
+        // Yes Button Flow
         let clicks = 0;
         function handleYes() {
             clicks++;
             const btn = document.getElementById('yes-btn');
             const status = document.getElementById('yes-status');
-            if(clicks === 1) { btn.style.transform = "scale(1.2)"; status.innerText = "You sure? 💞"; }
-            else if(clicks === 2) { btn.style.transform = "scale(1.4)"; status.innerText = "Say yes again... please 🥺"; }
+            if(clicks === 1) { btn.style.transform = "scale(1.1)"; status.innerText = "You sure? 💞"; }
+            else if(clicks === 2) { btn.style.transform = "scale(1.2)"; status.innerText = "Say yes again... please 🥺"; }
             else {
                 btn.style.display = 'none'; status.style.display = 'none';
                 const final = document.getElementById('final-section');
-                final.style.display = 'flex'; // Changed to flex for centering
+                final.style.display = 'flex';
                 setTimeout(() => final.style.opacity = '1', 50);
                 for(let i=0; i<30; i++) hearts.push(new HeartParticle());
             }
         }
 
+        // No Button Runaway
         function moveNo() {
             const btn = document.getElementById('no-btn');
             btn.style.position = 'fixed';
@@ -202,7 +203,7 @@
             btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
         }
 
-        // Easter Egg Detector
+        // Easter Egg (5 clicks on bg)
         let eggCount = 0;
         document.addEventListener('click', (e) => {
             if (e.target.tagName !== 'BUTTON') {
@@ -210,13 +211,15 @@
                 if (eggCount === 5) {
                     const egg = document.getElementById('easter-egg');
                     const vid = document.getElementById('easterVideo');
-                    egg.style.display = 'block'; vid.play().catch(()=>{});
-                    setTimeout(() => { egg.style.display = 'none'; vid.pause(); }, 6000);
+                    egg.style.display = 'block'; 
+                    vid.play().catch(()=>{});
+                    setTimeout(() => { egg.style.display = 'none'; vid.pause(); vid.currentTime = 0; }, 6000);
                     eggCount = 0;
                 }
             }
         });
 
+        // Music Toggle
         function toggleMusic() {
             const audio = document.getElementById('bgMusic');
             const btn = document.getElementById('musicBtn');
@@ -226,4 +229,3 @@
     </script>
 </body>
 </html>
-
