@@ -187,6 +187,8 @@
             if(clicks === 1) { btn.style.transform = "scale(1.1)"; status.innerText = "You sure? no changes this time💞"; }
             else if(clicks === 2) { btn.style.transform = "scale(1.2)"; status.innerText = "Say yes again... please 🥺"; }
             else {
+                document.getElementById('no-btn').style.display = 'none'; 
+                
                 btn.style.display = 'none'; status.style.display = 'none';
                 const final = document.getElementById('final-section');
                 final.style.display = 'flex';
@@ -229,6 +231,7 @@
     </script>
 </body>
 </html>
+
 
 
 
