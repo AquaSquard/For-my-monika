@@ -129,6 +129,14 @@
             <p id="clue-text" style="font-size: 0.7rem; color: #ccc; margin-top: 20px; opacity: 0; transition: opacity 2s;">
     (Psst... try tapping the empty space 5 times for a meowing surprise ✨)
 </p>
+            <div id="surprise-image" style="display: none; opacity: 0; transition: opacity 2s; margin-top: 40px; text-align: center;">
+    <div class="image-card" style="transform: rotate(0deg); margin: 0 auto; width: 320px; height: 400px;">
+        <img src="proposal.jpg" alt="Final Surprise">
+    </div>
+    <p class="intro-subtext" style="opacity: 1; margin-top: 15px; font-size: 1.4rem;">
+        Just like this, but in person soon. ❤️
+    </p>
+</div>
         </div>
     </div>
 
@@ -201,6 +209,15 @@
                     const clue = document.getElementById('clue-text');
                     if(clue) clue.style.opacity = '1';
                 }, 2000);
+                setTimeout(() => {
+    const surprise = document.getElementById('surprise-image');
+    if(surprise) {
+        surprise.style.display = 'block';
+        setTimeout(() => { surprise.style.opacity = '1'; }, 50);
+        
+        surprise.scrollIntoView({ behavior: 'smooth' });
+    }
+}, 7000);
             }
         }
 
@@ -238,6 +255,7 @@
     </script>
 </body>
 </html>
+
 
 
 
