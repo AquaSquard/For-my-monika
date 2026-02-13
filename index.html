@@ -126,6 +126,9 @@
             </div>
             <p class="intro-subtext" style="opacity: 1;">Love you for being with me❤️. Love you for being my cute lil lady✨❤️.<br>Love you for being✨ <span class="shimmer">My kitty🐈✨ for life❤️.</span></p>
             <p style="font-size: 0.8rem; color: #999; margin-top: 40px;">Made with love, just for My Kitty Cat🐈❤️.</p>
+            <p id="clue-text" style="font-size: 0.7rem; color: #ccc; margin-top: 20px; opacity: 0; transition: opacity 2s;">
+    (Psst... try tapping the empty space 5 times for a meowing surprise ✨)
+</p>
         </div>
     </div>
 
@@ -194,6 +197,10 @@
                 final.style.display = 'flex';
                 setTimeout(() => final.style.opacity = '1', 50);
                 for(let i=0; i<30; i++) hearts.push(new HeartParticle());
+                setTimeout(() => {
+                    const clue = document.getElementById('clue-text');
+                    if(clue) clue.style.opacity = '1';
+                }, 5000);
             }
         }
 
@@ -231,6 +238,7 @@
     </script>
 </body>
 </html>
+
 
 
 
